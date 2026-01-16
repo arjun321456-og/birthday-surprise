@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Happy Birthday Avani 🎉</title>
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+body{
+  height:100vh;
+  overflow:hidden;
+  background: linear-gradient(-45deg,#ff4d6d,#ff758f,#845ec2,#4d96ff);
+  background-size:400% 400%;
+  animation:bgMove 10s infinite alternate;
+}
+
+@keyframes bgMove{
+  0%{background-position:0% 50%}
+  100%{background-position:100% 50%}
+}
+
+.center{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  text-align:center;
+  color:white;
+}
+
+h1{
+  font-size:55px;
+  text-shadow:0 0 20px #fff;
+}
+
+.typing{
+  font-size:22px;
+  margin-top:20px;
+  min-height:30px;
+}
+
+.heart{
+  position:absolute;
+  color:#ff4d6d;
+  font-size:20px;
+  animation:float 6s linear infinite;
+}
+
+@keyframes float{
+  0%{transform:translateY(100vh) scale(0)}
+  100%{transform:translateY(-10vh) scale(1.5)}
+}
+
+canvas{
+  position:absolute;
+  top:0;
+  left:0;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<div class="center">
+  <h1>Happy Birthday Avani 🎂</h1>
+  <div class="typing" id="text"></div>
+</div>
+
+<script>
+// Typing Effect
+const msg=[
+  "Ee divasam ninte aanu 💖",
+  "Smile cheyyu, dream cheyyu ✨",
+  "Ninte life full happiness ayirikkatte 🌸",
+  "Once again Happy Birthday 🎉"
+];
+let i=0,j=0;
+const speed=80;
+const textDiv=document.getElementById("text");
+
+function type(){
+  if(j<msg[i].length){
+    textDiv.innerHTML+=msg[i][j];
+    j++;
+    setTimeout(type,speed);
+  }else{
+    setTimeout(()=>{
+      textDiv.innerHTML="";
+      j=0;
+      i=(i+1)%msg.length;
+      type();
+    },1500);
+  }
+}
+type();
+
+// Floating Hearts
+setInterval(()=>{
+  const heart=document.createElement("div");
+  heart.className="heart";
+  heart.innerHTML="❤️";
+  heart.style.left=Math.random()*100+"vw";
+  heart.style.fontSize=Math.random()*20+15+"px";
+  document.body.appendChild(heart);
+  setTimeout(()=>heart.remove(),6000);
+},300);
+
+// Fireworks
+const canvas=document.getElementById("fireworks");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+function firework(){
+  const x=Math.random()*canvas.width;
+  const y=Math.random()*canvas.height/2;
+  for(let i=0;i<80;i++){
+    ctx.beginPath();
+    ctx.arc(x,y,2,0,Math.PI*2);
+    ctx.fillStyle=`hsl(${Math.random()*360},100%,60%)`;
+    ctx.fill();
+  }
+}
+
+setInterval(()=>{
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  firework();
+},700);
+
+window.onresize=()=>{
+  canvas.width=innerWidth;
+  canvas.height=innerHeight;
+};
+</script>
+
+</body>
+</html>
